@@ -15,7 +15,7 @@ static constexpr uint32_t kPushLimit = std::min(kHardPushLimit, kVirtualPushLimi
 // Definitions for checking loops. Use 1 for on, 0 for off.
 #define CHECK_LOOP 1
 // Can be up to 2 times faster at finding loops, but slows down simulation slightly.
-#define FAST_LOOP_DETECTION 0
+#define FAST_LOOP_DETECTION 1
 
 struct BlockSegment
 {
