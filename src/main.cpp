@@ -4,8 +4,8 @@
 #include <algorithm>
 
 // Defines the extender itself
-static constexpr uint32_t kLength = 20;
-static constexpr uint32_t kPeriod = 20;
+static constexpr uint32_t kLength = 53;
+static constexpr uint32_t kPeriod = 12;
 
 // Constants
 static constexpr uint32_t kHardPushLimit = 12;
@@ -15,7 +15,7 @@ static constexpr uint32_t kPushLimit = std::min(kHardPushLimit, kVirtualPushLimi
 // Definitions for checking loops. Use 1 for on, 0 for off.
 #define CHECK_LOOP 1
 // Can be up to 2 times faster at finding loops, but slows down simulation slightly.
-#define FAST_LOOP_DETECTION 1
+#define FAST_LOOP_DETECTION 0
 
 struct BlockSegment
 {
@@ -169,7 +169,7 @@ void simulate_extender()
         {
 #endif // !FAST_LOOP_DETECTION
             std::cout
-                << "Loop at "
+                << "Loop at: "
                 << pulses << " pulses."
                 << std::endl;
             return;
@@ -177,16 +177,21 @@ void simulate_extender()
 #endif // CHECK_LOOP
     }
     std::cout
-        << kLength << " extender, "
-        << kPeriod << " tick period; "
         << pulses << " pulses."
         << std::endl;
 }
 
 int main() {
+    std::cout
+        << "Running "
+        << kLength << " extender, "
+        << kPeriod << " tick period."
+        << std::endl;
+    
     auto start_time = std::chrono::steady_clock::now();
     simulate_extender();
     auto delta = std::chrono::steady_clock::now() - start_time;
+    
     // Print status message at the end.
     double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(delta).count();
     std::cout
