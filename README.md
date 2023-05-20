@@ -1,5 +1,5 @@
-# Piston Extender Simulation
-A simple C++ program for simulating a Minecraft piston extender
+# Simulating the Snaperz Piston Extender
+A simple C++ program for simulating a Snaperz Piston Extender, a specific subclass of piston extenders in Minecraft.
 
 ## Building the project
 In order to build the project, run the `rebuild.sh` script.
@@ -29,3 +29,7 @@ After building the project, the simulation can be run through the following term
 ./build/extender
 ```
 Depending on the size of the extender, this could take a significant amount of time. Be patient!
+
+## Credit
+
+TODO
