@@ -30,7 +30,8 @@ struct BlockSegment
 void simulate_pulse(BlockSegment* root)
 {
     auto curr = root;
-    while (true) {
+    while (true)
+    {
         if (curr->len > 1)
         {
             // Handle pushing case:
@@ -181,7 +182,8 @@ void simulate_extender()
         << std::endl;
 }
 
-int main() {
+int main()
+{
     std::cout
         << "Running "
         << kLength << " extender, "
@@ -200,4 +202,5 @@ int main() {
         << elapsed / 1000.0
         << " seconds."
         << std::endl;
+    return 0;
 }
