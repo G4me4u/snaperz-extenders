@@ -32,4 +32,10 @@ Depending on the size of the extender, this could take a significant amount of t
 
 ## Credit
 
-TODO
+Development into Snaperz extenders spans multiple years. If you played a role but we forgot to list you here, contact us and we will add your name.
+
+Snaperz
+Space Walker
+MadCloud101
+G4me4u
+Ralp
