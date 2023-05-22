@@ -9,7 +9,7 @@ static constexpr uint32_t kPeriod = 12;
 
 // Constants
 static constexpr uint32_t kHardPushLimit = 12;
-static constexpr uint32_t kVirtualPushLimit (kPeriod / 4 - 2);
+static constexpr uint32_t kVirtualPushLimit = (kPeriod / 4 - 2);
 static constexpr uint32_t kPushLimit = std::min(kHardPushLimit, kVirtualPushLimit);
 
 // Definitions for checking loops. Use 1 for on, 0 for off.
