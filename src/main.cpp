@@ -17,6 +17,11 @@ static constexpr uint32_t kPushLimit = std::min(kHardPushLimit, kVirtualPushLimi
 // Can be up to 2 times faster at finding loops, but slows down simulation slightly.
 #define FAST_LOOP_DETECTION 1
 
+// Definitions for logging status updates
+#define LOG_STATUS_UPDATES 1
+// interval in number of pulses
+#define LOGGING_INTERVAL 1000000000
+
 
 // To learn more about Snaperz extenders, take a look at this document:
 // https://docs.google.com/document/d/1KCM7lk-GBn_-RIhuuUiZdNNiBWDc6Zm7g88cdIFOeQg/edit?usp=sharing
@@ -90,7 +95,7 @@ struct BlockSegment
     BlockSegment* next;
 };
 
-// Simulate a single extender pulse. Note while that in-game multiple pulses
+// Simulate a single extender pulse. Note that while in-game multiple pulses
 // occur simultaneously, this function captures that context in the virtual
 // push limit, which is dependent on the period of the extender.
 void simulate_pulse(BlockSegment* root)
@@ -216,9 +221,24 @@ void simulate_extender()
     init_segments(slow_segments, kLength + 1);
 
     uint64_t pulses = 0;
+    uint64_t pulses_since_last_status_update = 0;
     while (segments->next != nullptr)
     {
         pulses++;
+
+#if LOG_STATUS_UPDATES
+        pulses_since_last_status_update++;
+
+        if (pulses_since_last_status_update == LOGGING_INTERVAL)
+        {
+            pulses_since_last_status_update = 0;
+
+            std::cout
+                << pulses
+                << " pulses so far..."
+                << std::endl;
+        }
+#endif // LOG_STATUS_UPDATES
 
         simulate_pulse(segments);
 #if CHECK_LOOP
@@ -244,7 +264,7 @@ void simulate_extender()
 #endif // CHECK_LOOP
     }
     std::cout
-        << pulses << " pulses."
+        << pulses << " pulses in total."
         << std::endl;
 }
 
