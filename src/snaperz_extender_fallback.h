@@ -55,18 +55,12 @@ void snaperz_extender_simulate_pulse(SnaperzExtender& extender)
             //   the pistons push into further small segments is then handled by
             //   simulating the next sequential segment in the next iteration of
             //   the loop.
-            uint32_t blocks_to_push;
-            if (curr->next != nullptr)
-            {
-                blocks_to_push = std::min(kPushLimit, curr->len - 1);
-            }
-            else
-            {
-                // Note: We are at the last segment. Since the last block in
-                //       this segment is not a piston, the virtual push limit
-                //       no longer applies, and thus we push an extra block.
-                blocks_to_push = std::min(kLastPushLimit, curr->len - 1);
-            }
+
+            // Note: If we are at the last segment. Since the last block in this
+            //       segment is not a piston, the virtual push limit no longer
+            //       applies, and thus we push an extra block.
+            uint32_t push_limit = curr->next ? kPushLimit : kLastPushLimit;
+            uint32_t blocks_to_push = std::min(push_limit, curr->len - 1);
             // The blocks should be moved to the next sequential segment.
             auto seq_next = curr + 1;
             if (seq_next->len == 0)
@@ -119,7 +113,7 @@ bool snaperz_extender_equal(const SnaperzExtender& lhs, const SnaperzExtender& r
 {
     auto lhs_curr = lhs.segments;
     auto rhs_curr = rhs.segments;
-    while (lhs_curr != nullptr && rhs_curr != nullptr)
+    while (lhs_curr && rhs_curr)
     {
         // Check if the segment length is the same
         if (lhs_curr->len != rhs_curr->len)
