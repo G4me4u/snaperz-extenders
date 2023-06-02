@@ -24,5 +24,5 @@ typedef smallest_fit<kLength + 1>::type len_t;
 
 // Definitions for logging status updates
 #define LOG_STATUS_UPDATES 1
-// interval in number of pulses
-#define LOGGING_INTERVAL 1000000000
+// Interval in number of pulses
+#define LOGGING_INTERVAL UINT64_C(100000000)

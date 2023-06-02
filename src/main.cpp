@@ -29,6 +29,14 @@ std::ostream& print_time(std::ostream& os, std::chrono::nanoseconds ns)
 
 void simulate_extender()
 {
+  auto start_time = std::chrono::steady_clock::now();
+  
+  std::cout
+    << "Running "
+    << kLength << " extender, "
+    << kPeriod << " tick period."
+    << std::endl;
+
   snaperz::Extender extender = snaperz::create();
   uint64_t pulses = 0;
 
@@ -53,8 +61,10 @@ void simulate_extender()
       std::cout
         << '\r'
         << pulses
-        << " pulses so far..."
-        << std::flush;
+        << " pulses so far... (";
+      auto delta = std::chrono::steady_clock::now() - start_time;
+      print_time(std::cout, delta);
+      std::cout << ")" << std::flush;
     }
 #endif // LOG_STATUS_UPDATES
 
@@ -73,9 +83,12 @@ void simulate_extender()
     {
 #endif // !FAST_LOOP_DETECTION
       std::cout
+        << '\r'
         << "Loop at "
         << pulses
         << " pulses."
+        // Note: print spaces instead of status message
+        << std::setfill(' ') << std::setw(20) << ' '
         << std::endl;
       return;
     }
@@ -83,10 +96,13 @@ void simulate_extender()
   }
   // Print final status message.
   std::cout
+    << '\r'
     << "Done! "
     << pulses
-    << " pulses in total."
-    << std::endl;
+    << " pulses in total (";
+    auto delta = std::chrono::steady_clock::now() - start_time;
+    print_time(std::cout, delta);
+    std::cout << ")" << std::endl;
 
   // Perform Cleanup
   snaperz::destroy(extender);
@@ -97,21 +113,6 @@ void simulate_extender()
 
 int main()
 {
-  std::cout
-    << "Running "
-    << kLength << " extender, "
-    << kPeriod << " tick period."
-    << std::endl;
-  
-  auto start_time = std::chrono::steady_clock::now();
   simulate_extender();
-  auto delta = std::chrono::steady_clock::now() - start_time;
-  
-  // Print status message at the end.
-  std::cout
-    << std::endl
-    << "The operation took: ";
-  print_time(std::cout, delta);
-  std::cout << std::endl;
   return 0;
 }
