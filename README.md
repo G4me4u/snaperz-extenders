@@ -31,7 +31,7 @@ After building the project, the simulation can be run through the following term
 Depending on the size of the extender, this could take a significant amount of time. Be patient!
 
 ## Blazingly fast AVX2
-Since the dawn of this project the simulation also has AVX2 support, developed by G4me4u. This makes the program slightly less simple but at the same time blazingly fast! This feature requires AVX2 support on your CPU, which is checked by running the command below in the terminal.
+Since the dawn of this project the simulation also has AVX2 support, developed by G4me4u. This makes the program slightly less simple but at the same time blazingly fast! This feature requires AVX2 support on your CPU, and will otherwise use the traditional fallback implementation. CPU support is checked by running the command below in the terminal.
 ```bash
 gcc -mavx2 -dM -E - < /dev/null | egrep "SSE|AVX" | sort
 ```
