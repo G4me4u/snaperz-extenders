@@ -61,14 +61,14 @@ namespace snaperz
     void _simulate_step(Extender& extender);
 
     template<typename T>
-    inline bool _finished(const Extender& extender);
+    bool _finished(const Extender& extender);
 
     template<typename T>
-    inline bool _equals(const Extender& lhs, const Extender& rhs);
+    bool _equals(const Extender& lhs, const Extender& rhs);
 
-    // Note: debugging purposes only!
+#if _DEBUG
     template<class T>
-    inline void TEST_log(const __m256i & value)
+    inline void _DEBUG_log(const __m256i & value)
     {
       const size_t n = sizeof(__m256i) / sizeof(T);
       T buffer[n];
@@ -79,6 +79,7 @@ namespace snaperz
       }
       std::cout << std::endl;
     }
+#endif
 
     /* uint8_t implementation for AVX2 */
 
