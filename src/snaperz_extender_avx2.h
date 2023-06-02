@@ -197,7 +197,8 @@ namespace snaperz
       // Insert the next segment (after the last current element) into the
       // window, as the last element.
       const auto next_length = extender.segments[extender.p];
-      _next = _mm256_insert_epi8(_next, next_length, kSaturationCount / 2 - 1);
+      static constexpr auto kLastElem = std::min(UINT32_C(31), kSaturationCount / 2 - 1);
+      _next = _mm256_insert_epi8(_next, next_length, kLastElem);
 
       // Figure out if we are in the last segment.
       __m256i& _counter = extender._counter;
@@ -368,7 +369,8 @@ namespace snaperz
       _right_shift<uint16_t>(_next, _next);
       
       const auto next_length = extender.segments[extender.p];
-      _next = _mm256_insert_epi16(_next, next_length, kSaturationCount / 2 - 1);
+      static constexpr auto kLastElem = std::min(UINT32_C(15), kSaturationCount / 2 - 1);
+      _next = _mm256_insert_epi16(_next, next_length, kLastElem);
       
       __m256i& _counter = extender._counter;
       _counter = _mm256_add_epi16(_counter, _curr);
