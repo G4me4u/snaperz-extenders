@@ -1,10 +1,31 @@
 #include <iostream>
 #include <chrono>
 #include <cstdint>
+#include <iomanip>
 #include <algorithm>
 
 #include "snapers_extender.h"
 #include "constants.h"
+
+std::ostream& print_time(std::ostream& os, std::chrono::nanoseconds ns)
+{
+    typedef std::chrono::duration<uint64_t, std::ratio<86400>> days;
+    char fill = os.fill();
+    os.fill('0');
+    auto d = std::chrono::duration_cast<days>(ns);
+    ns -= d;
+    auto h = std::chrono::duration_cast<std::chrono::hours>(ns);
+    ns -= h;
+    auto m = std::chrono::duration_cast<std::chrono::minutes>(ns);
+    ns -= m;
+    auto s = std::chrono::duration_cast<std::chrono::seconds>(ns);
+    os << std::setw(2) << d.count() << "d:"
+       << std::setw(2) << h.count() << "h:"
+       << std::setw(2) << m.count() << "m:"
+       << std::setw(2) << s.count() << 's';
+    os.fill(fill);
+    return os;
+}
 
 void simulate_extender()
 {
@@ -30,9 +51,10 @@ void simulate_extender()
     {
       pulses_since_last_status_update = 0;
       std::cout
+        << '\r'
         << pulses
         << " pulses so far..."
-        << std::endl;
+        << std::flush;
     }
 #endif // LOG_STATUS_UPDATES
 
@@ -86,12 +108,10 @@ int main()
   auto delta = std::chrono::steady_clock::now() - start_time;
   
   // Print status message at the end.
-  double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(delta).count();
   std::cout
     << std::endl
-    << "The operation took "
-    << elapsed / 1000.0
-    << " seconds."
-    << std::endl;
+    << "The operation took: ";
+  print_time(std::cout, delta);
+  std::cout << std::endl;
   return 0;
 }
