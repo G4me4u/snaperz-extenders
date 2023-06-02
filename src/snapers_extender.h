@@ -1,5 +1,9 @@
 #pragma once
 
+#include <algorithm>
+
+#include "constants.h"
+
 // To learn more about Snaperz extenders, take a look at this document:
 // https://docs.google.com/document/d/1KCM7lk-GBn_-RIhuuUiZdNNiBWDc6Zm7g88cdIFOeQg/edit
 //
@@ -65,34 +69,37 @@
 // segment has length L + 1, then it must contain the extended block, and thus the
 // extender is fully retracted.
 
-struct SnaperzExtender;
+namespace snaperz
+{
+  struct Extender;
 
-// Initializes the given extender to the extended state, i.e. one where every
-// segment has length one (indicating that every piston is in its own segment
-// with one air block in between).
-//
-// Note: the extender returned by this method must be destroyed using the
-//       complementary destroy_snaperz_extender(...) function.
-SnaperzExtender create_snaperz_extender();
+  // Initializes the given extender to the extended state, i.e. one where every
+  // segment has length one (indicating that every piston is in its own segment
+  // with one air block in between).
+  //
+  // Note: the extender returned by this method must be destroyed using the
+  //       complementary destroy_snaperz_extender(...) function.
+  Extender create();
 
-// Frees up memory used by a snaperz extender created after an invocation of
-// the create_snaperz_extender() function.
-//
-// Note: the extender is no longer usable after an invocation of this method.
-void destroy_snaperz_extender(SnaperzExtender& extender);
+  // Frees up memory used by a snaperz extender created after an invocation of
+  // the create_snaperz_extender() function.
+  //
+  // Note: the extender is no longer usable after an invocation of this method.
+  void destroy(Extender& extender);
 
-// Simulate a single extender pulse. Note that while in-game multiple pulses
-// occur simultaneously, this function captures that context in the virtual
-// push limit, which is dependent on the period of the extender.
-void snaperz_extender_simulate_pulse(SnaperzExtender& extender);
+  // Simulate a single extender pulse. Note that while in-game multiple pulses
+  // occur simultaneously, this function captures that context in the virtual
+  // push limit, which is dependent on the period of the extender.
+  void simulate_pulse(Extender& extender);
 
-// Checks if two extenders contain the same segments
-bool snaperz_extender_equal(const SnaperzExtender& lhs, const SnaperzExtender& rhs);
+  // Checks if two extenders contain the same segments
+  bool equals(const Extender& lhs, const Extender& rhs);
 
-// Checks whether the given extender is finished, i.e. whether the extender
-// reached the goal state, where every block is retracted into a single
-// segment.
-bool snaperz_extender_finished(const SnaperzExtender& extender);
+  // Checks whether the given extender is finished, i.e. whether the extender
+  // reached the goal state, where every block is retracted into a single
+  // segment.
+  bool finished(const Extender& extender);
+};
 
 // Specialized implementations of the snaperz extender.
 #if __AVX2__
