@@ -10,7 +10,7 @@ cd "./build"
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make all
 ```
-The project requires that `GCC` supporting C++14, `cmake`, and `make` are installed on your system.
+The project requires that `GCC` supporting C++17, `cmake`, and `make` are installed on your system.
 
 In order to compile in debug mode, replace the third command with:
 ```bash
@@ -29,6 +29,13 @@ After building the project, the simulation can be run through the following term
 ./build/extender
 ```
 Depending on the size of the extender, this could take a significant amount of time. Be patient!
+
+## Blazingly fast AVX2
+Since the dawn of this project the simulation also has AVX2 support, developed by G4me4u. This makes the program slightly less simple but at the same time blazingly fast! This feature requires AVX2 support on your CPU, which is checked by running the command below in the terminal.
+```bash
+gcc -mavx2 -dM -E - < /dev/null | egrep "SSE|AVX" | sort
+```
+Your CPU supports AVX2 if the `#define __AVX2__ 1` line is shown in the output.
 
 ## Credit
 
