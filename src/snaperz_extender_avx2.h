@@ -66,7 +66,7 @@ namespace snaperz
     template<typename T>
     inline bool _equals(const Extender& lhs, const Extender& rhs);
 
-    // Note: debugging perposes only!
+    // Note: debugging purposes only!
     template<class T>
     inline void TEST_log(const __m256i & value)
     {
