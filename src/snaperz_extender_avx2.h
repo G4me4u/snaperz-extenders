@@ -39,13 +39,13 @@ namespace snaperz
     // of the window. This is used to check if we are in the last segment.
     __m256i _counter;
     // A cached value of the _last_seg_mask values used during simulation of
-    // the pulses.
+    // each step. This is use to check if the extender has finished.
     __m256i _last_seg_masks[2];
     // The parity bit defining which window is active
     uint32_t parity_bit = 0b0;
     // The position of the sequence which is first in the active window.
     size_t p;
-    // The total number of pulses that have been simulated.
+    // The total number of steps that have been simulated.
     uint64_t steps;
   };
 
