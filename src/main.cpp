@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <algorithm>
 
-#include "snapers_extender.h"
+#include "snaperz_extender.h"
 #include "constants.h"
 
 std::ostream& print_time(std::ostream& os, std::chrono::nanoseconds ns)

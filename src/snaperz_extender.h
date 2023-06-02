@@ -99,7 +99,7 @@ namespace snaperz
   // reached the goal state, where every block is retracted into a single
   // segment.
   bool finished(const Extender& extender);
-};
+}
 
 // Specialized implementations of the snaperz extender.
 #if __AVX2__
