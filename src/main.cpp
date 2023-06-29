@@ -59,12 +59,13 @@ void simulate_extender()
     {
       pulses_since_last_status_update = 0;
       std::cout
-        << '\r'
         << pulses
         << " pulses so far... (";
       auto delta = std::chrono::steady_clock::now() - start_time;
       print_time(std::cout, delta);
-      std::cout << ")" << std::flush;
+      std::cout
+        << ")\r"
+        << std::flush;
     }
 #endif // LOG_STATUS_UPDATES
 
@@ -83,7 +84,6 @@ void simulate_extender()
     {
 #endif // !FAST_LOOP_DETECTION
       std::cout
-        << '\r'
         << "Loop at "
         << pulses
         << " pulses."
@@ -96,7 +96,6 @@ void simulate_extender()
   }
   // Print final status message.
   std::cout
-    << '\r'
     << "Done! "
     << pulses
     << " pulses in total (";
